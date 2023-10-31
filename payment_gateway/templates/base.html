@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+
+<head>
+    <title>Razorpay Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        /* Css */
+        .container {
+            text-align: center;
+        }
+
+        .description-box {
+            background-color: #3399cc;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px;
+            background-color: #f7f7f7;
+            border-radius: 5px;
+        }
+
+        .profile-pic {
+            width: 120px; /* Adjust the width as needed */
+            height: 140px; /* Adjust the height as needed */
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <!-- Description Box in the Center -->
+    <div class="description-box">
+        <img class="profile-pic" src="{% static 'me.jpeg' %}" alt="Product Picture">
+        <h2>Kumar Satyam</h2>
+        <p>B.Tech in CSE From RIT Roorkee, Uttrakhand Technical University</p>
+        <p>Graduated in 2022</p>
+        
+
+        <p>Django Developer for 1 year + 4 Months Intern With PPO</p>
+        <p>Skills: Django, DRF, Agile, AWS</p>
+    </div>
+
+    <!-- Product Card -->
+    <div class="product-card">
+        <img class="profile-pic" src="{% static 'product.avif' %}" alt="Product Picture">
+        <h3>Demo Shampoo</h3>
+        <p>Just for demo purpose of Rs 100/-</p>
+        <!-- Razorpay Payment Button within the Card -->
+        <button id="rzp-button">Pay</button>
+    </div>
+</div>
+
+<script>
+    var options = {
+        "key": "{{ api_key }}", // From backend 
+        "amount": "{{ amount }}", // From Backend 
+        "currency": "INR",
+        "name": "Acme Corp", //  We can  replace it as needed
+        "description": "Test Transaction",
+        "order_id": "{{ order_id }}", // From backend 
+        "handler": function (response) {
+            alert("Your payment is successful ");
+            alert(response.razorpay_payment_id); // Default
+            alert(response.razorpay_order_id);// Default
+            alert(response.razorpay_signature)// Default
+        },
+        "prefill": { 
+            "name": "Test Kumar", //your customer's name
+            "email": "Test.kumar@example.com",
+            "contact": "9000090000" //Provide the customer's phone number for better conversion rates
+        },
+        "notes": {
+            "address": "Fatakpay Corporate Office"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+        alert("Your payment is failed");
+        alert(response.error.code); // Default
+        alert(response.error.description); // Default
+        alert(response.error.source); // Default
+        alert(response.error.step); // Default
+        alert(response.error.reason); // Default
+        alert(response.error.metadata.order_id); // Default
+        alert(response.error.metadata.payment_id); // Default
+    });
+    document.getElementById('rzp-button').onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+
+</body>
+</html>

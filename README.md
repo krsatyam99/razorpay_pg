@@ -62,7 +62,8 @@ Provide step-by-step installation instructions for your project.
 5. Run following command python manage.py makemigrations , python manage.py migrate , python manage.py createsuperuser, python manage.py runserver
 
  
-#####  Demo video 
+#####  Demo video  
+https://drive.google.com/file/d/1hr773CTBEjI_3YfAd1Db2_r7Vak9lwJ3/view?usp=sharing
 
 ## Project structure
 ![Screenshot (3)](https://github.com/krsatyam99/razorpay_pg/assets/103446420/6068bf03-1e8a-439e-ae74-887dd04bee65)
